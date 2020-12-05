@@ -1,0 +1,5 @@
+dm-haiku==0.0.3
+git+https://github.com/ntt123/haiku_trainer
+jax==0.2.6
+jaxlib==0.1.57
+optax==0.0.1
