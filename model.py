@@ -30,7 +30,7 @@ class PointerNet(hk.Module):
     self.lstm = hk.ResetCore(MyLSTM(hidden_size))
     self.enc_att_fc = hk.Linear(128, with_bias=False)
     self.dec_att_fc = hk.Linear(128, with_bias=False)
-    self.energy_fc = hk.Linear(1, with_bias=False)
+    # self.energy_fc = hk.Linear(1, with_bias=False)
     self.padded_input_len = padded_input_len
 
   def __call__(self, inputs: Tuple[ndarray, ndarray]):
@@ -59,10 +59,8 @@ class PointerNet(hk.Module):
     decoder_query = self.dec_att_fc(decoder_hx)[:, None]
 
     # energy function
-    energy = self.energy_fc(jnp.tanh(encoder_value + decoder_query))
-    energy = jnp.squeeze(energy, axis=-1)
-    # energy = encoder_value * decoder_query
-    # energy = jnp.sum(energy, axis=-1) / math.sqrt(energy.shape[-1])
+    energy = encoder_value * decoder_query
+    energy = jnp.sum(energy, axis=-1) / math.sqrt(energy.shape[-1])
 
     # apply input sequence mask
     input_mask = input_mask[:self.padded_input_len+1][None]

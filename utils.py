@@ -23,8 +23,7 @@ def plot_points_and_hull(points, hull, outfile=None):
   plt.figure(figsize=(3, 3))
   x, y = zip(*points)
   plt.scatter(x, y, s=20, alpha=0.5, c='red')
-  xs = []
-  ys = []
+  xs, ys = [], []
   for i in hull:
     xs.append(x[i])
     ys.append(y[i])
@@ -41,7 +40,7 @@ def get_left_most_point(points: List[Point]) -> int:
   return x.index(min(x))
 
 
-def on_left(c, a, b):
+def on_left_side(c, a, b):
   """
   if point C is on the left side of the road from A to B.
   ccw algorithm
@@ -52,7 +51,7 @@ def on_left(c, a, b):
 
 
 def compute_convex_hull(points: List[Point]) -> List[int]:
-  """Fift wrapping algorithm.
+  """Gift wrapping algorithm.
   https://en.wikipedia.org/wiki/Gift_wrapping_algorithm
   """
   c = get_left_most_point(points)
@@ -63,7 +62,7 @@ def compute_convex_hull(points: List[Point]) -> List[int]:
     end_point = points[0]
     c = 0
     for j in range(len(points)):
-      if end_point == point_on_hull or on_left(points[j], point_on_hull, end_point):
+      if end_point == point_on_hull or on_left_side(points[j], point_on_hull, end_point):
         end_point = points[j]
         c = j
     point_on_hull = end_point
@@ -71,8 +70,4 @@ def compute_convex_hull(points: List[Point]) -> List[int]:
     if end_point == start_point:
       break
 
-  # return out # left most point first
-
-  # minimum index first
-  idx = out.index(min(out))
-  return out[idx:-1] + out[:idx] + [out[idx]]
+  return out  # left-most point first
