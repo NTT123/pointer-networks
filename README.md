@@ -1,4 +1,4 @@
-# Pointer network
+# Pointer networks
 
 Use pointer network to compute the convex hull. 
 
@@ -25,7 +25,7 @@ This is an unofficial implementation of the research paper: https://arxiv.org/ab
 
 + Encoder attention hidden states are in a 2d plane which is a 1-to-1 mapping from the point space.
 
-<img src="imgs/encoder_attention_pca.jpg" alt="encoder" width="500"/>
+<img src="imgs/encoder_attention_pca.jpg" alt="encoder" width="600"/>
 
 + Decoder attention hidden states go around a circle in the 2d hidden plane.
 
